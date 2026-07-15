@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d0e12" />
+    <title>Isosurface Node Studio</title>
+    <script type="module" crossorigin src="./assets/index-C7SK2pRl.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-i-PWr__R.css">
+  </head>
+  <body>
+    <header class="app-toolbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div><strong>Isosurface</strong><span>Node Studio</span></div>
+      </div>
+
+      <div class="toolbar-divider"></div>
+      <button class="toolbar-button toolbar-button--primary" id="add-node" type="button">
+        <span aria-hidden="true">＋</span> Add node
+      </button>
+      <button class="toolbar-button" id="frame-graph" type="button" title="Frame all nodes">Frame all</button>
+      <button class="toolbar-button" id="delete-selection" type="button" disabled>Delete</button>
+
+      <div class="domain-legend" aria-label="Socket domains">
+        <span><i class="legend-dot legend-dot--3d"></i>3D field</span>
+        <span><i class="legend-dot legend-dot--bridge"></i>Projection</span>
+        <span><i class="legend-dot legend-dot--2d"></i>2D screen</span>
+      </div>
+
+      <div class="toolbar-spacer"></div>
+      <div class="compile-status" id="compile-status"><i></i><span>Compiling…</span></div>
+      <button class="toolbar-button" id="open-config" type="button">Graph JSON</button>
+      <button class="toolbar-button mobile-only" id="toggle-preview" type="button">Preview</button>
+    </header>
+
+    <main class="workspace">
+      <section class="graph-pane" id="graph-pane" aria-label="Node graph editor">
+        <div class="graph-viewport" id="graph-viewport" tabindex="0">
+          <div class="domain-watermark domain-watermark--3d">Procedural 3D field</div>
+          <div class="domain-watermark domain-watermark--2d">Projected 2D screen space</div>
+          <div class="graph-world" id="graph-world">
+            <svg class="connection-layer" id="connection-layer" width="10000" height="6000" aria-hidden="true"></svg>
+            <div class="node-layer" id="node-layer"></div>
+          </div>
+          <div class="graph-help">
+            <span>Drag sockets to connect</span><span>Drag background to pan</span><span>Scroll to zoom</span><span>Right-click to add</span>
+          </div>
+          <div class="zoom-readout" id="zoom-readout">100%</div>
+        </div>
+      </section>
+
+      <aside class="preview-pane" id="preview-pane" aria-label="Live shader preview">
+        <header class="preview-header">
+          <div><span class="live-dot"></span><strong>Live output</strong></div>
+          <span>Screen Output</span>
+        </header>
+        <canvas id="preview-canvas" aria-label="Compiled node graph preview"></canvas>
+        <div class="preview-error" id="preview-error" hidden></div>
+      </aside>
+    </main>
+
+    <div class="node-palette" id="node-palette" hidden>
+      <div class="palette-header">
+        <input id="node-search" type="search" autocomplete="off" placeholder="Search nodes…" aria-label="Search nodes" />
+        <button id="close-palette" type="button" aria-label="Close node palette">×</button>
+      </div>
+      <div class="palette-list" id="palette-list"></div>
+    </div>
+
+    <dialog class="config-dialog" id="config-dialog">
+      <form method="dialog" class="dialog-header">
+        <div><span>Version 1</span><h2>Node graph JSON</h2></div>
+        <button type="submit" aria-label="Close">×</button>
+      </form>
+      <p>This format contains the complete graph, node positions, connections, and parameters. Legacy layer JSON is intentionally unsupported.</p>
+      <textarea id="config-text" spellcheck="false" aria-label="Node graph JSON"></textarea>
+      <div class="dialog-actions">
+        <button class="secondary-button" id="copy-config" type="button">Copy JSON</button>
+        <button class="primary-button" id="import-config" type="button">Import graph</button>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
